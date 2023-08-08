@@ -1,92 +1,84 @@
-import "../public/css/global.css";
-import "../public/css/tippy.css";
-import "../public/css/customColors.css";
-import "tailwindcss/tailwind.css";
-import NProgress from "nprogress";
-import Router, { useRouter } from "next/router";
-import Head from "next/head";
+// pages/timer.js
+import { useEffect, useState } from 'react';
 
-import Header from "../components/Static/Header.jsx";
-import Footer from "../components/Static/Footer.jsx";
+const TimerPage = () => {
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-Router.onRouteChangeStart = () => NProgress.start();
-Router.onRouteChangeComplete = () => NProgress.done();
-Router.onRouteChangeError = () => NProgress.done();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowConfirmation(true);
+    }, 5000); // 5 seconds delay for the confirmation
 
-import { ThemeProvider } from 'next-themes'
+    return () => clearTimeout(timer);
+  }, []);
 
-export default function AwardApp({ Component, pageProps }) {
- 
-  const NavItems = [
-    {
-      link: true,
-      name: "Home",
-      icon: "fal fa-home",
-      activeIcon: "fa fa-home",
-      href: "/",
-    },
-    {
-      link: true,
-      name: "Commands",
-      icon: "fa fa-list-alt",
-      activeIcon: "fa fa-list-alt",
-      href: "/commands",
-    },
-    {
-      link: true,
-      name: "Support",
-      icon: "fab fa-discord",
-      activeIcon: "fab fa-discord",
-      href: "https://discord.gg/TNTvdjVCbb",
-    },
-    {
-      link: true,
-      name: "Add Bot",
-      icon: "fal fa-robot",
-      activeIcon: "fab fa-robot",
-      href: "https://discord.com/api/oauth2/authorize?client_id=984751927076192307&permissions=8&scope=applications.commands%20bot",
-    },
-       {
-      link: true,
-      name: "Vote",
-      icon: "fa fa-plus",
-      activeIcon: "fa fa-plus",
-      href: "https://top.gg/bot/984751927076192307/vote",
-    },
-    {
-      link: true,
-      name: "Partners",
-      icon: "fal fa-handshake",
-      activeIcon: "fa fa-handshake",
-      href: "/partners",
+  const handleConfirmation = (confirmed) => {
+    if (confirmed) {
+      window.location.href = 'https://coming-soon-ivory.vercel.app/';
+    } else {
+      setShowConfirmation(false);
+      setDarkMode(true);
     }
-  ]
+  };
+
+  const containerStyles = {
+    minHeight: '100vh',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontFamily: 'Arial, sans-serif',
+    backgroundColor: darkMode ? '#1f1f1f' : 'white',
+    color: darkMode ? 'white' : 'black',
+  };
+
+  const confirmationStyles = {
+    backgroundColor: darkMode ? '#292929' : 'white',
+    border: '1px solid #ccc',
+    padding: '20px',
+    textAlign: 'center',
+    maxWidth: '300px',
+    margin: '0 auto',
+    borderRadius: '5px',
+  };
+
+  const buttonStyles = {
+    margin: '0 10px',
+    padding: '5px 10px',
+    border: '1px solid #ccc',
+    cursor: 'pointer',
+    borderRadius: '3px',
+  };
+
+  const yesButtonStyles = {
+    ...buttonStyles,
+    backgroundColor: '#4caf50',
+    color: 'white',
+    border: 'none',
+  };
+
+  const noButtonStyles = {
+    ...buttonStyles,
+    backgroundColor: '#f44336',
+    color: 'white',
+    border: 'none',
+  };
 
   return (
-    <ThemeProvider defaultTheme='violet'>
-    <div className="h-screen relative border-t-4 border-amber-600">
-      <div
-        className="bg-gradient-to-b z-10 opacity-[25%] absolute top-0 w-full from-amber-600 to-transparent"
-        style={{ height: "500px" }}
-      />
-      <Head>
-        <title>
-          Scriptino Bot
-        </title>
-      </Head>
-      <main className="transition-all duration-200 z-10 absolute inset-0 px-5 h-screen max-w-7xl w-full mx-auto">
-        <Header NavItems={NavItems} />
-        <div className="block px-5 md:px-0">
-          <Component {...pageProps} />
+    <div style={containerStyles}>
+      {showConfirmation ? (
+        <div style={confirmationStyles}>
+          <p>Do you really want to proceed to the website with the timer?</p>
+          <div>
+            <button style={yesButtonStyles} onClick={() => handleConfirmation(true)}>Yes</button>
+            <button style={noButtonStyles} onClick={() => handleConfirmation(false)}>No</button>
+          </div>
         </div>
-        <Footer />
-      </main>
-      <div>
-        <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" />
-        <script src="/js/main.js?i=2" />
-      </div>
+      ) : (
+        <p>Redirecting...</p>
+      )}
     </div>
-    </ThemeProvider>
   );
-}
+};
+
+export default TimerPage;
