@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 
 const TimerPage = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -13,27 +12,20 @@ const TimerPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const redirectToHomepage = () => {
+    window.location.href = 'https://scriptino.vercel.app/';
+  };
+
   const handleConfirmation = (confirmed) => {
     if (confirmed) {
       window.location.href = 'https://coming-soon-ivory.vercel.app/';
     } else {
-      setShowConfirmation(false);
-      setDarkMode(true);
+      redirectToHomepage();
     }
   };
 
-  const containerStyles = {
-    minHeight: '100vh',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontFamily: 'Arial, sans-serif',
-    backgroundColor: darkMode ? '#1f1f1f' : 'white',
-    color: darkMode ? 'white' : 'black',
-  };
-
   const confirmationStyles = {
-    backgroundColor: darkMode ? '#292929' : 'white',
+    backgroundColor: 'white',
     border: '1px solid #ccc',
     padding: '20px',
     textAlign: 'center',
@@ -65,7 +57,7 @@ const TimerPage = () => {
   };
 
   return (
-    <div style={containerStyles}>
+    <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: 'Arial, sans-serif' }}>
       {showConfirmation ? (
         <div style={confirmationStyles}>
           <p>Do you really want to proceed to the website with the timer?</p>
