@@ -65,7 +65,7 @@ export default function AwardApp({ Component, pageProps }) {
       name: "Timer",
       icon: "fa fa-plus",
       activeIcon: "fa fa-plus",
-      href: "https://https://scriptino.vercel.app/timer",
+      href: "https://scriptino.vercel.app/timer",
     }
   ]
 
