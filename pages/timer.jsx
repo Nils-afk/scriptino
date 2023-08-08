@@ -1,6 +1,5 @@
 // pages/timer.js
 import { useEffect, useState } from 'react';
-import styles from '../styles/Timer.module.css';
 
 const TimerPage = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -21,24 +20,46 @@ const TimerPage = () => {
     }
   };
 
+  const confirmationStyles = {
+    backgroundColor: 'white',
+    border: '1px solid #ccc',
+    padding: '20px',
+    textAlign: 'center',
+    maxWidth: '300px',
+    margin: '0 auto',
+    borderRadius: '5px',
+  };
+
+  const buttonStyles = {
+    margin: '0 10px',
+    padding: '5px 10px',
+    border: '1px solid #ccc',
+    cursor: 'pointer',
+    borderRadius: '3px',
+  };
+
+  const yesButtonStyles = {
+    ...buttonStyles,
+    backgroundColor: '#4caf50',
+    color: 'white',
+    border: 'none',
+  };
+
+  const noButtonStyles = {
+    ...buttonStyles,
+    backgroundColor: '#f44336',
+    color: 'white',
+    border: 'none',
+  };
+
   return (
-    <div className={styles.container}>
+    <div style={{ minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center', fontFamily: 'Arial, sans-serif' }}>
       {showConfirmation ? (
-        <div className={styles.confirmationBox}>
+        <div style={confirmationStyles}>
           <p>Do you really want to proceed to the website with the timer?</p>
-          <div className={styles.buttons}>
-            <button
-              className={`${styles.button} ${styles.yesButton}`}
-              onClick={() => handleConfirmation(true)}
-            >
-              Yes
-            </button>
-            <button
-              className={`${styles.button} ${styles.noButton}`}
-              onClick={() => handleConfirmation(false)}
-            >
-              No
-            </button>
+          <div>
+            <button style={yesButtonStyles} onClick={() => handleConfirmation(true)}>Yes</button>
+            <button style={noButtonStyles} onClick={() => handleConfirmation(false)}>No</button>
           </div>
         </div>
       ) : (
